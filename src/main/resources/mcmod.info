@@ -1,0 +1,16 @@
+[
+{
+  "modid": "maniaccore",
+  "name": "ManiacCore",
+  "description": "Various Helpers for TheManiacs Mods",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "https://github.com/orgs/TheManiacs",
+  "updateUrl": "",
+  "authorList": ["kilobyte", "XDjackieXD"],
+  "credits": "Everyone helping TheManiacs",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]
