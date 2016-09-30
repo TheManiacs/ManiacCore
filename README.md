@@ -1,8 +1,8 @@
 ## Downloads
-In the github downloads section ...eventually
+In the GitHub releases section ...eventually
 
 ## Setup
-May not work like this on windows, but you'll figure it out
+May not work like this on Windows, but you'll figure it out
 ```bash
 ./gradlew sDecW idea
 ```
