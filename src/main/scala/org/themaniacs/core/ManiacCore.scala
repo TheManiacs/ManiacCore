@@ -22,7 +22,7 @@ object ManiacCore {
 
 
   @SidedProxy(clientSide = "org.themaniacs.core.proxy.ClientProxy", serverSide = "org.themaniacs.core.proxy.ServerProxy")
-  var proxy: CommonProxy = null
+  var proxy: CommonProxy = _
 
   @EventHandler
   def preInit(e: FMLPreInitializationEvent) {
