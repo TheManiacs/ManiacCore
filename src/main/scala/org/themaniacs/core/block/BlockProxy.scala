@@ -13,6 +13,7 @@ class BlockProxy(val implementation: BlockBase) extends Block(implementation.mat
   override def onBlockPlaced(worldIn: World, pos: BlockPos, facing: EnumFacing, hitX: Float, hitY: Float, hitZ: Float, meta: Int, placer: EntityLivingBase): IBlockState = {
     val state = getStateFromMeta(meta)
     implementation.onPlaced(worldIn, pos, Option(facing), Some((hitX, hitY, hitZ)), state, Option(placer), None)
+    state
   }
 
   override def onBlockPlacedBy(worldIn: World, pos: BlockPos, state: IBlockState, placer: EntityLivingBase, stack: ItemStack) = {

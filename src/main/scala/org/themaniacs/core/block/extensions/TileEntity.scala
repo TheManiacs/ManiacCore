@@ -9,6 +9,6 @@ trait TileEntity {
   def makeNewTileEntity(world: World, state: IBlockState): TE
 
   def getTileEntity(world: World, pos: BlockPos) = {
-    Option(world.getTileEntity(pos)).getOrElse(makeNewTileEntity(world, pos, world.getBlockState(pos)))
+    Option(world.getTileEntity(pos)).getOrElse(makeNewTileEntity(world, world.getBlockState(pos)))
   }
 }
