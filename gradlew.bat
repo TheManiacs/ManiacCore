@@ -1,4 +1,13 @@
 @if "%DEBUG%" == "" @echo off
+
+echo "######################################################"
+echo "### Critical Bug Found: This Computer Runs Windows ###"
+echo "######################################################"
+echo "In order to fix this bug, follow one of the following Guides (pick your favourite):"
+echo "* https://help.ubuntu.com/community/Installation"
+echo "* https://wiki.archlinux.org/index.php/Installation_Guide"
+
+
 @rem ##########################################################################
 @rem
 @rem  Gradle startup script for Windows
