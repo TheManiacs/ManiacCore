@@ -1,5 +1,6 @@
 package org.themaniacs.core
 
+import proxy.{Proxy => CommonProxy}
 import net.minecraftforge.fml.common.{SidedProxy, Mod}
 import net.minecraftforge.fml.common.Mod.EventHandler
 import net.minecraftforge.fml.common.event.{FMLPostInitializationEvent, FMLInitializationEvent, FMLPreInitializationEvent}
@@ -20,8 +21,8 @@ object ManiacCore {
   var logger: Option[log4j.Logger] = None
 
 
-  @SidedProxy(clientSide = "org.themaniacs.core.proxy.ProxyClient", serverSide = "org.themaniacs.core.proxy.ProxyServer")
-  var proxy: proxy.Proxy = null
+  @SidedProxy(clientSide = "org.themaniacs.core.proxy.ClientProxy", serverSide = "org.themaniacs.core.proxy.ServerProxy")
+  var proxy: CommonProxy = null
 
   @EventHandler
   def preInit(e: FMLPreInitializationEvent) {
