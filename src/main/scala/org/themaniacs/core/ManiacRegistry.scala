@@ -14,6 +14,10 @@ object ManiacRegistry {
     val mod: String = Loader.instance().activeModContainer().getModId
     blockProxy.setUnlocalizedName(mod + ".block." + block.id)
     blockProxy.setRegistryName(mod, block.id)
+    block.creativeTab match {
+      case Some(tab) => blockProxy.setCreativeTab(tab)
+      case None => ()
+    }
     GameRegistry.register(blockProxy)
 
     val itemBlock = block.makeItemBlock(blockProxy)
