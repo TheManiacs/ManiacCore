@@ -1,13 +1,18 @@
 package org.themaniacs.core.item
 
+import net.minecraft.creativetab.CreativeTabs
 import net.minecraft.entity.{EntityLivingBase, Entity}
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.{EnumAction, ItemStack, Item}
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.{EnumFacing, EnumActionResult, ActionResult, EnumHand}
 import net.minecraft.world.World
+import net.minecraftforge.fml.relauncher.{Side, SideOnly}
 import org.themaniacs.core.item.extensions._
-import org.themaniacs.core.util.{Fail, Pass, Success}
+import org.themaniacs.core.util.{DeveloperFuckedUpException, Fail, Pass, Success}
+import java.util.{List => JavaList}
+
+import scala.collection.convert.wrapAsScala._
 
 class ItemProxy(val implementation: ItemBase) extends Item {
   override def getItemStackLimit: Int = implementation.maxStackSize
@@ -17,6 +22,24 @@ class ItemProxy(val implementation: ItemBase) extends Item {
     implementation match {
       case t: Subtypes => true
       case _ => false
+    }
+  }
+
+  @SideOnly(Side.CLIENT)
+  override def getSubItems(item: Item, tab: CreativeTabs, subItems: JavaList[ItemStack]) = {
+    implementation match {
+      case t: Subtypes => t.subItems.foldLeft(0){
+        (count, name) => {
+          if(count <= 65534) {
+            subItems += new ItemStack(this, 1, count)
+          }else{
+            throw new DeveloperFuckedUpException("Registering more than 65535 sub items is NOT supported!")
+          }
+
+          count+1
+        }
+      }
+      case _ => subItems.add(new ItemStack(item))
     }
   }
 
