@@ -10,7 +10,7 @@ import org.themaniacs.core.item.extensions._
 import org.themaniacs.core.util.{Fail, Pass, Success}
 
 class ItemProxy(val implementation: ItemBase) extends Item {
-  override def getItemStackLimit: Int = { implementation.maxStackSize }
+  override def getItemStackLimit: Int = implementation.maxStackSize
 
   //Subtypes
   override def getHasSubtypes: Boolean = {
@@ -24,12 +24,14 @@ class ItemProxy(val implementation: ItemBase) extends Item {
   override def onUpdate(stack: ItemStack, world: World, entity: Entity, itemSlot: Int, isSelected: Boolean) = {
     implementation match {
       case updates: Updates => updates.onTick(stack, world, entity, itemSlot, isSelected)
+      case _ => ()
     }
   }
 
   override def onUsingTick(stack: ItemStack, entity: EntityLivingBase, count: Int) = {
     implementation match {
       case updates: Updates => updates.onUseTick(stack, entity, count)
+      case _ => ()
     }
   }
 
@@ -75,6 +77,7 @@ class ItemProxy(val implementation: ItemBase) extends Item {
   override def onPlayerStoppedUsing(stack: ItemStack, world: World, entity: EntityLivingBase, timeLeft: Int) = {
     implementation match {
       case usable: Usable => usable.onUseStop(stack, world, entity, timeLeft)
+      case _ => ()
     }
   }
 
