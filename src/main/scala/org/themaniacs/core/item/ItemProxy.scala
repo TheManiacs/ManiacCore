@@ -10,11 +10,6 @@ import org.themaniacs.core.item.extensions._
 import org.themaniacs.core.util.{Fail, Pass, Success}
 
 class ItemProxy(val implementation: ItemBase) extends Item {
-  override def setMaxStackSize(maxStackSize: Int): Item = {
-    implementation.maxStackSize = maxStackSize
-    this
-  }
-
   override def getItemStackLimit: Int = { implementation.maxStackSize }
 
   //Subtypes
