@@ -14,7 +14,7 @@ trait Usable {
   def getUseDuration(stack: ItemStack): Int
 
   //called before interacting with blocks
-  def onUseFirst(stack: ItemStack, world: World, player: EntityPlayer, hand: EnumHand, pos: BlockPos, side: EnumFacing, hitX: Float, hitY: Float, hitZ: Float): ActionResult[_]
+  def onUseFirst(stack: ItemStack, world: World, player: EntityPlayer, hand: EnumHand, pos: BlockPos, side: EnumFacing, hitX: Float, hitY: Float, hitZ: Float): ActionResult[Unit]
 
   //called when item gets right-clicked
   def onUse(stack: ItemStack, world: World, player: EntityPlayer, hand: EnumHand): ActionResult[ItemStack]
