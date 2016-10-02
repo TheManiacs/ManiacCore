@@ -1,7 +1,6 @@
 package org.themaniacs.core.block
 
 import net.minecraft.block.ITileEntityProvider
-import net.minecraft.block.material.{MapColor, Material}
 import net.minecraft.tileentity.{TileEntity => TE}
 import net.minecraft.world.World
 import org.themaniacs.core.block.extensions.TileEntity
