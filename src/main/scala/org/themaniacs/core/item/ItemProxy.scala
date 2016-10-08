@@ -28,15 +28,17 @@ class ItemProxy(val implementation: ItemBase) extends Item {
   @SideOnly(Side.CLIENT)
   override def getSubItems(item: Item, tab: CreativeTabs, subItems: JavaList[ItemStack]) = {
     implementation match {
-      case t: Subtypes => t.subItems.foldLeft(0){
+      case t: Subtypes => t.subItems.foldLeft(0) {
         (count, name) => {
-          if(count <= 65534) {
+          if (count <= 32767) {
             subItems += new ItemStack(this, 1, count)
-          }else{
+          } else if (count <= 65535) {
+            subItems += new ItemStack(this, 1, 32767-count)
+          } else {
             throw new DeveloperFuckedUpException("Registering more than 65535 sub items is NOT supported!")
           }
 
-          count+1
+          count + 1
         }
       }
       case _ => subItems.add(new ItemStack(item))
@@ -78,7 +80,7 @@ class ItemProxy(val implementation: ItemBase) extends Item {
     }
   }
 
-  override def onItemUseFinish (stack: ItemStack, world: World, entity: EntityLivingBase): ItemStack = {
+  override def onItemUseFinish(stack: ItemStack, world: World, entity: EntityLivingBase): ItemStack = {
     implementation match {
       case usable: Usable => usable.onUseFinish(stack, world, entity)
       case _ => stack
