@@ -11,7 +11,7 @@ import net.minecraftforge.fml.relauncher.{Side, SideOnly}
 import org.themaniacs.core.item.extensions.Pickaxe
 import java.util.{List => JavaList}
 
-class ItemPickaxeProxy(val containedItem: ItemBase with Pickaxe) extends ItemPickaxe(containedItem.toolMaterial) with ItemProxy {
+class ItemPickaxeProxy(val containedItem: ItemBase with Pickaxe) extends ItemPickaxe(containedItem.material) with ItemProxy {
   override def getItemStackLimit: Int = ItemProxyCommon.getItemStackLimit(this)
 
   //Subtypes

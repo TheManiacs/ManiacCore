@@ -11,7 +11,7 @@ import net.minecraftforge.fml.relauncher.{Side, SideOnly}
 import org.themaniacs.core.item.extensions.Shovel
 import java.util.{List => JavaList}
 
-class ItemShovelProxy(val containedItem: ItemBase with Shovel) extends ItemSpade(containedItem.toolMaterial) with ItemProxy {
+class ItemShovelProxy(val containedItem: ItemBase with Shovel) extends ItemSpade(containedItem.material) with ItemProxy {
   override def getItemStackLimit: Int = ItemProxyCommon.getItemStackLimit(this)
 
   //Subtypes

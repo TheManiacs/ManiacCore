@@ -12,7 +12,7 @@ import org.themaniacs.core.item.extensions._
 import java.util.{List => JavaList}
 import scala.collection.JavaConverters._
 
-class ItemToolProxy(val containedItem: ItemBase with Tool) extends ItemTool(containedItem.entityDamage, containedItem.attackSpeed, containedItem.toolMaterial, containedItem.effectiveBlocks.asJava) with ItemProxy {
+class ItemToolProxy(val containedItem: ItemBase with Tool) extends ItemTool(containedItem.entityDamage, containedItem.attackSpeed, containedItem.material, containedItem.effectiveBlocks.asJava) with ItemProxy {
   override def getItemStackLimit: Int = ItemProxyCommon.getItemStackLimit(this)
 
   //Subtypes

@@ -6,6 +6,6 @@ import net.minecraft.item.Item
 trait Tool {
   val entityDamage: Float
   val attackSpeed: Float
-  val toolMaterial: Item.ToolMaterial
+  val material: Item.ToolMaterial
   val effectiveBlocks: Set[Block]
 }

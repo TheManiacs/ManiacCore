@@ -11,7 +11,7 @@ import net.minecraftforge.fml.relauncher.{Side, SideOnly}
 import org.themaniacs.core.item.extensions.Sword
 import java.util.{List => JavaList}
 
-class ItemSwordProxy(val containedItem: ItemBase with Sword) extends ItemSword(containedItem.toolMaterial) with ItemProxy {
+class ItemSwordProxy(val containedItem: ItemBase with Sword) extends ItemSword(containedItem.material) with ItemProxy {
   override def getItemStackLimit: Int = ItemProxyCommon.getItemStackLimit(this)
 
   //Subtypes
