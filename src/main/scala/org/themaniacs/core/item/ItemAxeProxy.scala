@@ -8,10 +8,10 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.util.{EnumActionResult, EnumFacing, ActionResult, EnumHand}
 import net.minecraft.world.World
 import net.minecraftforge.fml.relauncher.{Side, SideOnly}
-import org.themaniacs.core.item.extensions.Pickaxe
+import org.themaniacs.core.item.extensions.Axe
 import java.util.{List => JavaList}
 
-class ItemPickaxeCommon(val containedItem: ItemBase with Pickaxe) extends ItemPickaxe(containedItem.toolMaterial) with ItemProxy {
+class ItemAxeProxy(val containedItem: ItemBase with Axe) extends ItemAxe(containedItem.toolMaterial) with ItemProxy {
   override def getItemStackLimit: Int = ItemProxyCommon.getItemStackLimit(this)
 
   //Subtypes
