@@ -2,8 +2,8 @@ package org.themaniacs.core
 
 import net.minecraftforge.fml.common.Loader
 import net.minecraftforge.fml.common.registry.GameRegistry
-import org.themaniacs.core.item.extensions.{Tool, Food, Subtypes}
-import org.themaniacs.core.item.{ItemToolProxy, ItemFoodProxy, ItemProxyBase, ItemBase}
+import org.themaniacs.core.item.extensions._
+import org.themaniacs.core.item._
 import org.themaniacs.core.util.DeveloperFuckedUpException
 
 object ManiacRegistry {
@@ -11,6 +11,8 @@ object ManiacRegistry {
     val itemProxy = item match {
       case i: ItemBase with Food => new ItemFoodProxy(i)
       case i: ItemBase with Tool => new ItemToolProxy(i)
+      case i: ItemBase with Sword => new ItemSwordProxy(i)
+      case i: ItemBase with Pickaxe => new ItemPickaxeCommon(i)
       case i => new ItemProxyBase(i)
     }
     val mod: String = Loader.instance().activeModContainer().getModId
