@@ -14,6 +14,7 @@ object ManiacRegistry {
       case i: ItemBase with Sword => new ItemSwordProxy(i)
       case i: ItemBase with Pickaxe => new ItemPickaxeProxy(i)
       case i: ItemBase with Axe => new ItemAxeProxy(i)
+      case i: ItemBase with Shovel => new ItemShovelProxy(i)
       case i => new ItemProxyBase(i)
     }
     val mod: String = Loader.instance().activeModContainer().getModId
