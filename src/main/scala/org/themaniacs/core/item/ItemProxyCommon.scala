@@ -8,14 +8,15 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.util.{EnumFacing, EnumActionResult, ActionResult, EnumHand}
 import net.minecraft.world.World
 import org.themaniacs.core.item.extensions._
-import org.themaniacs.core.util.{Fail, Pass, Success, DeveloperFuckedUpException}
+import org.themaniacs.core.util._
 import java.util.{List => JavaList}
 
 import scala.collection.convert.wrapAsScala._
 
 object ItemProxyCommon {
 
-  def getItemStackLimit(self: Item with ItemProxy): Int = self.containedItem.maxStackSize
+  def getItemStackLimit(self: Item with ItemProxy): Int =
+    self.containedItem.maxStackSize
 
   //Subtypes
   def getHasSubtypes(self: Item with ItemProxy): Boolean = {
@@ -29,6 +30,7 @@ object ItemProxyCommon {
     self.containedItem match {
       case t: Subtypes => t.subItems.foldLeft(0) {
         (count, name) => {
+          // Minecraft item damage values are signed 16bit integers (from -32768 to 32767)
           if (count <= 32767) {
             subItems += new ItemStack(self, 1, count)
           } else if (count <= 65535) {
@@ -89,7 +91,7 @@ object ItemProxyCommon {
   def onItemUseFirst(self: Item with ItemProxy, stack: ItemStack, player: EntityPlayer, world: World, pos: BlockPos, side: EnumFacing, hitX: Float, hitY: Float, hitZ: Float, hand: EnumHand): EnumActionResult = {
     self.containedItem match {
       case usable: Usable =>
-        usable.onUseFirst(stack, world, player, hand, pos, side, hitX, hitY, hitZ) match {
+        usable.onUseFirst(stack, world, player, hand, pos, side, new Coords3(hitX, hitY, hitZ)) match {
           case Success(_) => EnumActionResult.SUCCESS
           case Pass(_) => EnumActionResult.PASS
           case Fail(_) => EnumActionResult.FAIL
@@ -116,7 +118,7 @@ object ItemProxyCommon {
   def onItemUse(self: Item with ItemProxy, stack: ItemStack, player: EntityPlayer, world: World, pos: BlockPos, hand: EnumHand, facing: EnumFacing, hitX: Float, hitY: Float, hitZ: Float): EnumActionResult = {
     self.containedItem match {
       case blockInteraction: BlockInteraction =>
-        blockInteraction.onBlockInteract(stack, player, world, pos, hand, facing, hitX, hitY, hitZ) match {
+        blockInteraction.onBlockInteract(stack, player, world, pos, hand, facing, new Coords3(hitX, hitY, hitZ)) match {
           case Success(_) => EnumActionResult.SUCCESS
           case Pass(_) => EnumActionResult.PASS
           case Fail(_) => EnumActionResult.FAIL

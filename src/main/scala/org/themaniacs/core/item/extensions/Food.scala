@@ -5,7 +5,10 @@ import net.minecraft.item.ItemStack
 import net.minecraft.world.World
 
 trait Food {
-  // the trait "Usable" will NOT work in combination with "Food"!
+  // prevent implementation of multiple exclusive traits
+  final def needsSpecialProxy() = {}
+  final def needsExclusiveUsable() = {}
+
   val healAmount: Int
   val saturation: Float
   val wolfFood: Boolean

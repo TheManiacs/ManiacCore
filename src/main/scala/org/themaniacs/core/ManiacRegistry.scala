@@ -31,8 +31,11 @@ object ManiacRegistry {
     item match {
       case i: ItemBase with Subtypes => i.subItems.foldLeft(0){
         (count, name) => {
-          if(count <= 65534) {
+          // Minecraft item damage values are signed 16bit integers (from -32768 to 32767)
+          if (count <= 32767) {
             ManiacCore.proxy.registerItemRender(itemProxy, count, Some(name))
+          } else if (count <= 65535) {
+            ManiacCore.proxy.registerItemRender(itemProxy, 32767-count, Some(name))
           }else{
             throw new DeveloperFuckedUpException("Registering more than 65535 sub items is NOT supported!")
           }
