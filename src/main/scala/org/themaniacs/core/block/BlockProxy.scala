@@ -4,8 +4,8 @@ import net.minecraft.block.Block
 import net.minecraft.block.state.IBlockState
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.item.ItemStack
-import net.minecraft.util.EnumFacing
 import net.minecraft.util.math.BlockPos
+import net.minecraft.util.{EnumBlockRenderType, EnumFacing}
 import net.minecraft.world.{IBlockAccess, World}
 
 trait BlockProxy extends Block {
@@ -34,6 +34,15 @@ trait BlockProxy extends Block {
 
   override def onNeighborChange(world: IBlockAccess, pos: BlockPos, neighbor: BlockPos) = {
     impl.onNeighbourChange(world, world.getBlockState(pos), pos, Option(neighbor), None)
+  }
+
+  override def getRenderType(state: IBlockState) = {
+    impl match {
+      case _: NoRender => EnumBlockRenderType.INVISIBLE
+      case _: LiquidRender => EnumBlockRenderType.LIQUID
+      case _: AnimatedRender => EnumBlockRenderType.ENTITYBLOCK_ANIMATED
+      case _ => EnumBlockRenderType.MODEL
+    }
   }
 
   override def isFullCube(state: IBlockState) = true
