@@ -1,7 +1,10 @@
 package org.themaniacs.core
 
+import net.minecraft.tileentity.TileEntity
 import net.minecraftforge.fml.common.Loader
 import net.minecraftforge.fml.common.registry.GameRegistry
+import org.themaniacs.core.block.extensions.Ore
+import org.themaniacs.core.block.{BlockBase, BlockContainerProxy, BlockOreProxy, GenericBlockProxy}
 import org.themaniacs.core.item.extensions._
 import org.themaniacs.core.item._
 import org.themaniacs.core.util.DeveloperFuckedUpException
@@ -48,18 +51,18 @@ object ManiacRegistry {
     GameRegistry.register(itemProxy)
 
     item match {
-      case i: ItemBase with Subtypes => i.subItems.foldLeft(0){
+      case i: ItemBase with Subtypes => i.subItems.foldLeft(0) {
         (count, name) => {
           // Minecraft item damage values are signed 16bit integers (from -32768 to 32767)
           if (count <= 32767) {
             ManiacCore.proxy.registerItemRender(itemProxy, count, Some(name))
           } else if (count <= 65535) {
-            ManiacCore.proxy.registerItemRender(itemProxy, 32767-count, Some(name))
-          }else{
+            ManiacCore.proxy.registerItemRender(itemProxy, 32767 - count, Some(name))
+          } else {
             throw new DeveloperFuckedUpException("Registering more than 65535 sub items is NOT supported!")
           }
 
-          count+1
+          count + 1
         }
       }
       case _ => ManiacCore.proxy.registerItemRender(itemProxy, 0, None)
