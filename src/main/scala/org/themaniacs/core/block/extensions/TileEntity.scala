@@ -11,4 +11,6 @@ trait TileEntity {
   def getTileEntity(world: World, pos: BlockPos) = {
     Option(world.getTileEntity(pos)).getOrElse(makeNewTileEntity(world, world.getBlockState(pos)))
   }
+
+  final def youCanOnlyImplementOneTypeTrait() = {}
 }
