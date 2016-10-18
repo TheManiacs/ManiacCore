@@ -41,8 +41,15 @@ minecraft {
     replace "/*@MCVERSIONDEP@*/", ", acceptedMinecraftVersions = \"[${config.minecraft.version},${config.minecraft.version}+)\""
 }
 
-dependencies {
+repositories {
+    maven {
+        name = "kilobyte22"
+        url = "https://maven.kilobyte22.de"
+    }
+}
 
+dependencies {
+    compile "de.kilobyte22.configparser:config-parser:1.0"
 }
 
 processResources

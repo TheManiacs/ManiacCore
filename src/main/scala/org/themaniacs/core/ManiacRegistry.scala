@@ -7,9 +7,13 @@ import org.themaniacs.core.block.extensions.Ore
 import org.themaniacs.core.block.{BlockBase, BlockContainerProxy, BlockOreProxy, GenericBlockProxy}
 import org.themaniacs.core.item.extensions._
 import org.themaniacs.core.item._
+import org.themaniacs.core.recipe.RecipeHandler
 import org.themaniacs.core.util.DeveloperFuckedUpException
 
+import scala.collection.mutable
+
 object ManiacRegistry {
+
   def registerBlock(block: BlockBase) = {
     val blockProxy = block match {
       case b: BlockBase with TileEntity => new BlockContainerProxy(b)
