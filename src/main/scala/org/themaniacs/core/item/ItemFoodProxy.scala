@@ -6,8 +6,7 @@ import net.minecraft.item.{EnumAction, ItemStack, ItemFood}
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util._
 import net.minecraft.world.World
-import org.themaniacs.core.item.extensions.{Usable, Food}
-import org.themaniacs.core.util.{Coords3, Fail, Pass, Success}
+import org.themaniacs.core.item.extensions.Food
 
 class ItemFoodProxy(val impl: ItemBase with Food) extends ItemFood(impl.healAmount, impl.saturation, impl.wolfFood) with ItemProxy {
   // special stuff for food and usage
