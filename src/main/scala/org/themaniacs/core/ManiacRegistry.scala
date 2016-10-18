@@ -1,6 +1,6 @@
 package org.themaniacs.core
 
-import net.minecraft.tileentity.TileEntity
+import org.themaniacs.core.block.extensions.TileEntity
 import net.minecraftforge.fml.common.Loader
 import net.minecraftforge.fml.common.registry.GameRegistry
 import org.themaniacs.core.block.extensions.Ore

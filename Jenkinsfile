@@ -7,7 +7,7 @@ node {
 
    sh "rm -rf build/libs/"
    sh "chmod +x gradlew"
-   sh "./gradlew build -Pbuildnumber=${env.BUILD_NUMBER}-${env.JOB_NAME}".replace('%2F', '_')
+   sh "./gradlew build -Pbuildnumber=${env.BUILD_NUMBER}-BRANCH".replace('BRANCH', "${env.JOB_NAME}".replace('/', '_'))
 
    stage "Archive artifacts"
 
