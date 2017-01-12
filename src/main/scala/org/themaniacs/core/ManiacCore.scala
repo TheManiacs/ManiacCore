@@ -1,11 +1,11 @@
 package org.themaniacs.core
 
 import proxy.{Proxy => CommonProxy}
-import net.minecraftforge.fml.common.{SidedProxy, Mod}
+import net.minecraftforge.fml.common.{Mod, SidedProxy}
 import net.minecraftforge.fml.common.Mod.EventHandler
-import net.minecraftforge.fml.common.event.{FMLPostInitializationEvent, FMLInitializationEvent, FMLPreInitializationEvent}
+import net.minecraftforge.fml.common.event.{FMLInitializationEvent, FMLPostInitializationEvent, FMLPreInitializationEvent}
 import org.apache.logging.log4j
-import org.apache.logging.log4j.LogManager
+import org.apache.logging.log4j.{LogManager, Logger}
 
 @Mod(modid = ManiacCore.ModID, name = ManiacCore.Name, version = ManiacCore.Version, modLanguage = "scala" /*@MCVERSIONDEP@*/)
 object ManiacCore {
@@ -16,7 +16,7 @@ object ManiacCore {
 
   final val Version = "@VERSION@"
 
-  def log = logger.getOrElse(LogManager.getLogger(Name))
+  def log: Logger = logger.getOrElse(LogManager.getLogger(Name))
 
   var logger: Option[log4j.Logger] = None
 
@@ -32,13 +32,13 @@ object ManiacCore {
   }
 
   @EventHandler
-  def init(e: FMLInitializationEvent) = {
+  def init(e: FMLInitializationEvent): Unit = {
     proxy.init(e)
     ManiacCore.log.info("Done with init phase.")
   }
 
   @EventHandler
-  def postInit(e: FMLPostInitializationEvent) = {
+  def postInit(e: FMLPostInitializationEvent): Unit = {
     proxy.postInit(e)
     ManiacCore.log.info("Done with post init phase.")
   }

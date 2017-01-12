@@ -23,6 +23,7 @@ file "build.properties" withReader {
 
 version = "${config.themaniacs.core.version}"
 group= "org.themaniacs.core"
+//noinspection GroovyUnusedAssignment
 archivesBaseName = "maniaccore"
 
 //append build number for nightly builds

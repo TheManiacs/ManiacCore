@@ -17,9 +17,9 @@ abstract class BlockBase {
   val mapColor: MapColor
   val creativeTab: Option[CreativeTabs]
 
-  def onPlaced(world: IBlockAccess, pos: BlockPos, facing: Option[EnumFacing], subPos: Option[(Float, Float, Float)], state: IBlockState, source: Option[EntityLivingBase], stack: Option[ItemStack]) = ()
-  def onBroken(world: IBlockAccess, pos: BlockPos, state: IBlockState, player: Option[EntityPlayer]) = ()
-  def onNeighbourChange(world: IBlockAccess, state: IBlockState, myPos: BlockPos, otherPos: Option[BlockPos], otherBlock: Option[Block]) = ()
+  def onPlaced(world: IBlockAccess, pos: BlockPos, facing: Option[EnumFacing], subPos: Option[(Float, Float, Float)], state: IBlockState, source: Option[EntityLivingBase], stack: Option[ItemStack]): Unit = ()
+  def onBroken(world: IBlockAccess, pos: BlockPos, state: IBlockState, player: Option[EntityPlayer]): Unit = ()
+  def onNeighbourChange(world: IBlockAccess, state: IBlockState, myPos: BlockPos, otherPos: Option[BlockPos], otherBlock: Option[Block]): Unit = ()
 
   def makeItemBlock(proxy: BlockProxy) = new GeneralItemBlock(proxy)
   def getRenderType(state: IBlockState): EnumBlockRenderType = EnumBlockRenderType.MODEL

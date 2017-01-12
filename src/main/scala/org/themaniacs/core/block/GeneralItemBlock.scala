@@ -6,7 +6,7 @@ class GeneralItemBlock(block: BlockProxy) extends ItemBlock(block) {
   setHasSubtypes(false)
   setMaxDamage(0)
 
-  override def getUnlocalizedName(stack: ItemStack) = getUnlocalizedName
+  override def getUnlocalizedName(stack: ItemStack): String = getUnlocalizedName
 
-  override def getMetadata(damage: Int) = damage
+  override def getMetadata(damage: Int): Int = damage
 }

@@ -10,7 +10,7 @@ import org.themaniacs.core.item.extensions.Food
 
 class ItemFoodProxy(val impl: ItemBase with Food) extends ItemFood(impl.healAmount, impl.saturation, impl.wolfFood) with ItemProxy {
   // special stuff for food and usage
-  override def onFoodEaten(stack: ItemStack, world: World, player: EntityPlayer) =
+  override def onFoodEaten(stack: ItemStack, world: World, player: EntityPlayer): Unit =
     impl.onEaten(stack, world, player)
 
   // default use duration of food is 32
@@ -18,16 +18,23 @@ class ItemFoodProxy(val impl: ItemBase with Food) extends ItemFood(impl.healAmou
     impl.getUseDuration(stack)
 
   //Usable - default implementation here as it would interfere with ItemFood
-  override def onItemRightClick(stack: ItemStack, world: World, player: EntityPlayer, hand: EnumHand): ActionResult[ItemStack] =
-    new ActionResult(EnumActionResult.PASS, stack)
+  override def onItemRightClick(world: World, player: EntityPlayer, hand: EnumHand): ActionResult[ItemStack] = {
+    val stack = player.getHeldItem(hand)
+    if(player.canEat(impl.alwaysEdible)) {
+      player.setActiveHand(hand)
+      new ActionResult(EnumActionResult.SUCCESS, stack)
+    } else {
+      new ActionResult(EnumActionResult.FAIL, stack)
+    }
+  }
 
   override def onItemUseFinish(stack: ItemStack, world: World, entity: EntityLivingBase): ItemStack =
     stack
 
-  override def onItemUseFirst(stack: ItemStack, player: EntityPlayer, world: World, pos: BlockPos, side: EnumFacing, hitX: Float, hitY: Float, hitZ: Float, hand: EnumHand): EnumActionResult =
+  override def onItemUseFirst(player: EntityPlayer, world: World, pos: BlockPos, side: EnumFacing, hitX: Float, hitY: Float, hitZ: Float, hand: EnumHand): EnumActionResult =
     EnumActionResult.PASS
 
-  override def onPlayerStoppedUsing(stack: ItemStack, world: World, entity: EntityLivingBase, timeLeft: Int) = ()
+  override def onPlayerStoppedUsing(stack: ItemStack, world: World, entity: EntityLivingBase, timeLeft: Int): Unit = ()
 
   override def getItemUseAction(stack: ItemStack): EnumAction =
     EnumAction.NONE

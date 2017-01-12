@@ -8,9 +8,9 @@ import net.minecraft.world.World
 trait TileEntity {
   def makeNewTileEntity(world: World, state: IBlockState): TE
 
-  def getTileEntity(world: World, pos: BlockPos) = {
+  def getTileEntity(world: World, pos: BlockPos): TE = {
     Option(world.getTileEntity(pos)).getOrElse(makeNewTileEntity(world, world.getBlockState(pos)))
   }
 
-  final def youCanOnlyImplementOneTypeTrait() = {}
+  final def youCanOnlyImplementOneTypeTrait(): Unit = {}
 }

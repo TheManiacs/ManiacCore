@@ -10,7 +10,7 @@ import org.themaniacs.core.util.{Coords3, ActionResult}
 
 trait Usable {
   // prevent implementation of multiple exclusive traits
-  final def needsExclusiveUsable() = {}
+  final def needsExclusiveUsable(): Unit = {}
 
   val useAction: EnumAction
 
