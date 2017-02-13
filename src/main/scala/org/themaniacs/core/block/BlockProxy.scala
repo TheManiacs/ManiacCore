@@ -7,7 +7,8 @@ import net.minecraft.item.ItemStack
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.EnumBlockRenderType
 import net.minecraft.world.{IBlockAccess, World}
-import org.themaniacs.core.block.extensions.{AnimatedRender, LiquidRender, NoRender}
+import org.themaniacs.core.block.extensions.{AnimatedRender, LiquidRender, ModelRender, NoRender}
+import org.themaniacs.core.util.DeveloperFuckedUpException
 
 trait BlockProxy extends Block {
   val impl: BlockBase
@@ -35,13 +36,22 @@ trait BlockProxy extends Block {
   override def getRenderType(state: IBlockState): EnumBlockRenderType = {
     impl match {
       case _: NoRender => EnumBlockRenderType.INVISIBLE
+      case _: ModelRender => EnumBlockRenderType.MODEL
       case _: LiquidRender => EnumBlockRenderType.LIQUID
       case _: AnimatedRender => EnumBlockRenderType.ENTITYBLOCK_ANIMATED
-      case _ => EnumBlockRenderType.MODEL
+      case _ => throw new DeveloperFuckedUpException(s"No render trait implemented on ${impl.getClass.getName}. Fix plz. If you want the block to be invisible use NoRender.")
     }
   }
 
-  override def isFullCube(state: IBlockState) = true
+  override def isFullCube(state: IBlockState): Boolean = isOpaqueCube(state)
 
-  override def isOpaqueCube(state: IBlockState) = true
+  override def isOpaqueCube(state: IBlockState): Boolean = {
+    impl match {
+      case _: NoRender => false
+      case i: ModelRender => i.isOpaqueCube
+      case _: LiquidRender => false
+      case i: AnimatedRender => i.isOpaqueCube
+      case _ => throw new DeveloperFuckedUpException(s"No render trait implemented on ${impl.getClass.getName}. Fix plz. If you want the block to be invisible use NoRender.")
+    }
+  }
 }

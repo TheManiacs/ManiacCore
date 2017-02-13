@@ -6,6 +6,13 @@ trait NoRender {
 }
 
 //noinspection AccessorLikeMethodIsUnit
+trait ModelRender {
+  final def canOnlyImplementOneRenderType(): Unit = ()
+
+  val isOpaqueCube = true
+}
+
+//noinspection AccessorLikeMethodIsUnit
 trait LiquidRender {
   final def canOnlyImplementOneRenderType(): Unit = ()
 }
@@ -13,4 +20,6 @@ trait LiquidRender {
 //noinspection AccessorLikeMethodIsUnit
 trait AnimatedRender {
   final def canOnlyImplementOneRenderType(): Unit = ()
+
+  val isOpaqueCube = true
 }
