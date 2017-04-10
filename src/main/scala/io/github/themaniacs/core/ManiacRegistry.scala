@@ -28,6 +28,7 @@ object ManiacRegistry {
 
     val itemBlock = block.makeItemBlock(blockProxy)
     itemBlock.setRegistryName(blockProxy.getRegistryName)
+    GameRegistry.register(itemBlock)
   }
 
   def registerItem(item: ItemBase): Unit = {

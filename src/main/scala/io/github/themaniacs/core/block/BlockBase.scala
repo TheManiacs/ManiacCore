@@ -24,5 +24,4 @@ abstract class BlockBase {
   def onNeighbourChange(world: IBlockAccess, state: IBlockState, myPos: BlockPos, otherPos: Option[BlockPos], otherBlock: Option[Block]): Unit = ()
 
   def makeItemBlock(proxy: BlockProxy) = new GeneralItemBlock(proxy)
-  def getRenderType(state: IBlockState): EnumBlockRenderType = EnumBlockRenderType.MODEL
 }
