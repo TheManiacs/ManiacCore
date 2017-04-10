@@ -17,6 +17,8 @@ abstract class BlockBase {
   val mapColor: MapColor
   val creativeTab: Option[CreativeTabs]
 
+  var proxy: Option[BlockProxy] = None
+
   def onPlaced(world: IBlockAccess, pos: BlockPos, facing: Option[EnumFacing], subPos: Option[(Float, Float, Float)], state: IBlockState, source: Option[EntityLivingBase], stack: Option[ItemStack]): Unit = ()
   def onBroken(world: IBlockAccess, pos: BlockPos, state: IBlockState, player: Option[EntityPlayer]): Unit = ()
   def onNeighbourChange(world: IBlockAccess, state: IBlockState, myPos: BlockPos, otherPos: Option[BlockPos], otherBlock: Option[Block]): Unit = ()
