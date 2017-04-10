@@ -20,6 +20,7 @@ object ManiacRegistry {
       case b: BlockBase with Ore => new BlockOreProxy(b)
       case b => new GenericBlockProxy(b)
     }
+    block.proxy = Some(blockProxy)
     val mod: String = Loader.instance().activeModContainer().getModId
     blockProxy.setUnlocalizedName(mod + ".block." + block.id)
     blockProxy.setRegistryName(mod, block.id)
