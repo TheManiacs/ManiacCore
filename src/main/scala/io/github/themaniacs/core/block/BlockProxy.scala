@@ -5,10 +5,10 @@ import net.minecraft.block.state.IBlockState
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.item.ItemStack
 import net.minecraft.util.math.BlockPos
-import net.minecraft.util.EnumBlockRenderType
+import net.minecraft.util.{BlockRenderLayer, EnumBlockRenderType}
 import net.minecraft.world.{IBlockAccess, World}
 import io.github.themaniacs.core.block.extensions.{AnimatedRender, LiquidRender, ModelRender, NoRender}
-import io.github.themaniacs.core.util.DeveloperFuckedUpException
+import io.github.themaniacs.core.util.{DeveloperFuckedUpException, SOLID, TRANSPARENT, CUTOUT}
 
 trait BlockProxy extends Block {
   val impl: BlockBase
@@ -43,14 +43,56 @@ trait BlockProxy extends Block {
     }
   }
 
+  override def getBlockLayer: BlockRenderLayer = {
+    impl match {
+      case _: NoRender => BlockRenderLayer.CUTOUT
+      case i: ModelRender => i.renderLayer match {
+        case SOLID => BlockRenderLayer.SOLID
+        case TRANSPARENT => BlockRenderLayer.TRANSLUCENT
+        case CUTOUT => BlockRenderLayer.CUTOUT
+      }
+      case i: LiquidRender => i.renderLayer match {
+        case SOLID => BlockRenderLayer.SOLID
+        case TRANSPARENT => BlockRenderLayer.TRANSLUCENT
+        case CUTOUT => BlockRenderLayer.CUTOUT
+      }
+      case i: AnimatedRender => i.renderLayer match {
+        case SOLID => BlockRenderLayer.SOLID
+        case TRANSPARENT => BlockRenderLayer.TRANSLUCENT
+        case CUTOUT => BlockRenderLayer.CUTOUT
+      }
+    }
+  }
+
+  override def canRenderInLayer(state: IBlockState, layer: BlockRenderLayer): Boolean = {
+    impl match {
+      case _: NoRender => false
+      case i: ModelRender => i.renderLayer match {
+        case SOLID => layer == BlockRenderLayer.SOLID
+        case TRANSPARENT => layer == BlockRenderLayer.SOLID || layer == BlockRenderLayer.TRANSLUCENT
+        case CUTOUT => layer == BlockRenderLayer.CUTOUT
+      }
+      case i: LiquidRender => i.renderLayer match {
+        case SOLID => layer == BlockRenderLayer.SOLID
+        case TRANSPARENT => layer == BlockRenderLayer.SOLID || layer == BlockRenderLayer.TRANSLUCENT
+        case CUTOUT => layer == BlockRenderLayer.CUTOUT
+      }
+      case i: AnimatedRender => i.renderLayer match {
+        case SOLID => layer == BlockRenderLayer.SOLID
+        case TRANSPARENT => layer == BlockRenderLayer.SOLID || layer == BlockRenderLayer.TRANSLUCENT
+        case CUTOUT => layer == BlockRenderLayer.CUTOUT
+      }
+    }
+  }
+
   override def isFullCube(state: IBlockState): Boolean = isOpaqueCube(state)
 
   override def isOpaqueCube(state: IBlockState): Boolean = {
     impl match {
       case _: NoRender => false
-      case i: ModelRender => i.isOpaqueCube
-      case _: LiquidRender => false
-      case i: AnimatedRender => i.isOpaqueCube
+      case i: ModelRender => i.isFullOpaqueCube
+      case i: LiquidRender =>  i.isFullOpaqueCube
+      case i: AnimatedRender => i.isFullOpaqueCube
       case _ => throw new DeveloperFuckedUpException(s"No render trait implemented on ${impl.getClass.getName}. Fix plz. If you want the block to be invisible use NoRender.")
     }
   }
