@@ -1,7 +1,7 @@
 package io.github.themaniacs.core.item
 
-import net.minecraft.item.ItemTool
 import io.github.themaniacs.core.item.extensions.Tool
+import net.minecraft.item.ItemTool
 
 import scala.collection.JavaConverters._
 

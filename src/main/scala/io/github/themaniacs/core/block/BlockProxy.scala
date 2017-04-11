@@ -25,7 +25,7 @@ trait BlockProxy extends Block {
     impl.onBroken(worldIn, pos, state, None)
   }
 
-  override def neighborChanged(state: IBlockState, worldIn: World, pos: BlockPos, blockIn: Block, fromBlock: BlockPos): Unit = {
+  override def neighborChanged(state: IBlockState, worldIn: World, pos: BlockPos, blockIn: Block): Unit = {
     impl.onNeighbourChange(worldIn, state, pos, None, Option(blockIn))
   }
 

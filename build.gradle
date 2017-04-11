@@ -23,6 +23,7 @@ file "build.properties" withReader {
 
 version = "MC${config.minecraft.version}-${config.themaniacs.core.version}"
 group= "io.github.themaniacs.core"
+//noinspection GroovyUnusedAssignment
 archivesBaseName = "ManiacCore"
 
 //append build number for nightly builds

@@ -1,5 +1,6 @@
 package io.github.themaniacs.core.item
 
+import io.github.themaniacs.core.item.extensions.{EntityInteraction, Subtypes, Updates}
 import net.minecraft.creativetab.CreativeTabs
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.entity.{Entity, EntityLivingBase}
@@ -10,9 +11,6 @@ import net.minecraft.world.World
 import io.github.themaniacs.core.item.extensions._
 import io.github.themaniacs.core.util._
 import java.util.{List => JavaList}
-
-import io.github.themaniacs.core.item.extensions.{Subtypes, Usable}
-import io.github.themaniacs.core.util.DeveloperFuckedUpException
 
 import scala.collection.convert.wrapAsScala._
 
@@ -30,7 +28,7 @@ trait ItemProxy extends Item {
     }
   }
 
-  override def getSubItems(item: Item, tab: CreativeTabs, subItems: JavaList[ItemStack]) = {
+  override def getSubItems(item: Item, tab: CreativeTabs, subItems: JavaList[ItemStack]): Unit = {
     impl match {
       case t: Subtypes => t.subItems.foldLeft(0) {
         (count, name) => {
@@ -51,14 +49,14 @@ trait ItemProxy extends Item {
   }
 
   //Updates
-  override def onUpdate(stack: ItemStack, world: World, entity: Entity, itemSlot: Int, isSelected: Boolean) = {
+  override def onUpdate(stack: ItemStack, world: World, entity: Entity, itemSlot: Int, isSelected: Boolean): Unit = {
     impl match {
       case updates: Updates => updates.onTick(stack, world, entity, itemSlot, isSelected)
       case _ => ()
     }
   }
 
-  override def onUsingTick(stack: ItemStack, entity: EntityLivingBase, count: Int) = {
+  override def onUsingTick(stack: ItemStack, entity: EntityLivingBase, count: Int): Unit = {
     impl match {
       case updates: Updates => updates.onUseTick(stack, entity, count)
       case _ => ()
@@ -73,15 +71,15 @@ trait ItemProxy extends Item {
     }
   }
 
-  override def onItemRightClick(stack: ItemStack, world: World, player: EntityPlayer, hand: EnumHand): ActionResult[ItemStack] = {
+  override def onItemRightClick(itemStack: ItemStack, world: World, player: EntityPlayer, hand: EnumHand): ActionResult[ItemStack] = {
     impl match {
       case usable: Usable =>
-        usable.onUse(stack, world, player, hand) match {
+        usable.onUse(itemStack, world, player, hand) match {
           case Success(item) => new ActionResult(EnumActionResult.SUCCESS, item)
           case Pass(item) => new ActionResult(EnumActionResult.PASS, item)
           case Fail(item) => new ActionResult(EnumActionResult.FAIL, item)
         }
-      case _ => new ActionResult(EnumActionResult.PASS, stack)
+      case _ => new ActionResult(EnumActionResult.PASS, itemStack)
     }
   }
 
@@ -92,10 +90,10 @@ trait ItemProxy extends Item {
     }
   }
 
-  override def onItemUseFirst(stack: ItemStack, player: EntityPlayer, world: World, pos: BlockPos, side: EnumFacing, hitX: Float, hitY: Float, hitZ: Float, hand: EnumHand): EnumActionResult = {
+  override def onItemUseFirst(itemStack: ItemStack, player: EntityPlayer, world: World, pos: BlockPos, side: EnumFacing, hitX: Float, hitY: Float, hitZ: Float, hand: EnumHand): EnumActionResult = {
     impl match {
       case usable: Usable =>
-        usable.onUseFirst(stack, world, player, hand, pos, side, new Coords3(hitX, hitY, hitZ)) match {
+        usable.onUseFirst(itemStack, world, player, hand, pos, side, new Coords3(hitX, hitY, hitZ)) match {
           case Success(_) => EnumActionResult.SUCCESS
           case Pass(_) => EnumActionResult.PASS
           case Fail(_) => EnumActionResult.FAIL
@@ -104,7 +102,7 @@ trait ItemProxy extends Item {
     }
   }
 
-  override def onPlayerStoppedUsing(stack: ItemStack, world: World, entity: EntityLivingBase, timeLeft: Int) = {
+  override def onPlayerStoppedUsing(stack: ItemStack, world: World, entity: EntityLivingBase, timeLeft: Int): Unit = {
     impl match {
       case usable: Usable => usable.onUseStop(stack, world, entity, timeLeft)
       case _ => ()
@@ -119,10 +117,10 @@ trait ItemProxy extends Item {
   }
 
   //BlockInteraction
-  override def onItemUse(stack: ItemStack, player: EntityPlayer, world: World, pos: BlockPos, hand: EnumHand, facing: EnumFacing, hitX: Float, hitY: Float, hitZ: Float): EnumActionResult = {
+  override def onItemUse(itemStack: ItemStack, player: EntityPlayer, world: World, pos: BlockPos, hand: EnumHand, facing: EnumFacing, hitX: Float, hitY: Float, hitZ: Float): EnumActionResult = {
     impl match {
       case blockInteraction: BlockInteraction =>
-        blockInteraction.onBlockInteract(stack, player, world, pos, hand, facing, new Coords3(hitX, hitY, hitZ)) match {
+        blockInteraction.onBlockInteract(itemStack, player, world, pos, hand, facing, new Coords3(hitX, hitY, hitZ)) match {
           case Success(_) => EnumActionResult.SUCCESS
           case Pass(_) => EnumActionResult.PASS
           case Fail(_) => EnumActionResult.FAIL

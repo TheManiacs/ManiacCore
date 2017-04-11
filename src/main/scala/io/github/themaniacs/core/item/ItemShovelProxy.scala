@@ -1,6 +1,5 @@
 package io.github.themaniacs.core.item
 
-import io.github.themaniacs.core.item.extensions.Shovel
 import net.minecraft.item.ItemSpade
 import io.github.themaniacs.core.item.extensions.Shovel
 
