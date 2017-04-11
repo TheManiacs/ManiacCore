@@ -14,7 +14,7 @@ trait BlockProxy extends Block {
   val impl: BlockBase
 
   override def onBlockPlacedBy(worldIn: World, pos: BlockPos, state: IBlockState, placer: EntityLivingBase, stack: ItemStack): Unit = {
-    impl.onPlaced(worldIn, pos, None, None, state, Option(placer), Option(stack))
+    impl.onPlaced(worldIn, pos, None, None, state, Some(placer), Some(stack))
   }
 
   override def onBlockAdded(worldIn: World, pos: BlockPos, state: IBlockState): Unit = {
@@ -26,11 +26,11 @@ trait BlockProxy extends Block {
   }
 
   override def neighborChanged(state: IBlockState, worldIn: World, pos: BlockPos, blockIn: Block, fromBlock: BlockPos): Unit = {
-    impl.onNeighbourChange(worldIn, state, pos, None, Option(blockIn))
+    impl.onNeighbourChange(worldIn, state, pos, Some(fromBlock), Some(blockIn))
   }
 
   override def onNeighborChange(world: IBlockAccess, pos: BlockPos, neighbor: BlockPos): Unit = {
-    impl.onNeighbourChange(world, world.getBlockState(pos), pos, Option(neighbor), None)
+    impl.onNeighbourChange(world, world.getBlockState(pos), pos, Some(neighbor), None)
   }
 
   override def getRenderType(state: IBlockState): EnumBlockRenderType = {
