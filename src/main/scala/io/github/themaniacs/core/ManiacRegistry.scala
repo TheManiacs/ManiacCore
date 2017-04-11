@@ -8,6 +8,9 @@ import io.github.themaniacs.core.block.{BlockBase, BlockContainerProxy, BlockOre
 import io.github.themaniacs.core.item.extensions._
 import io.github.themaniacs.core.item._
 import io.github.themaniacs.core.util.DeveloperFuckedUpException
+import net.minecraft.client.renderer.block.model.ModelResourceLocation
+import net.minecraft.item.Item
+import net.minecraftforge.client.model.ModelLoader
 
 object ManiacRegistry {
   def registerBlock(block: BlockBase): Unit = {
@@ -29,6 +32,13 @@ object ManiacRegistry {
     val itemBlock = block.makeItemBlock(blockProxy)
     itemBlock.setRegistryName(blockProxy.getRegistryName)
     GameRegistry.register(itemBlock)
+  }
+
+  def registerBlockInventoryModel(blockBase: BlockBase): Unit = {
+    blockBase.proxy match {
+      case Some(block) => ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(block), 0, new ModelResourceLocation(block.getRegistryName,"inventory"))
+      case None => ManiacCore.log.error("Failed to load model for " + blockBase.id + " because proxy is None.")
+    }
   }
 
   def registerItem(item: ItemBase): Unit = {
