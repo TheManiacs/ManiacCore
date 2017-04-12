@@ -93,6 +93,7 @@ trait BlockProxy extends Block {
       case i: ModelRender => i.isFullOpaqueCube
       case i: LiquidRender =>  i.isFullOpaqueCube
       case i: AnimatedRender => i.isFullOpaqueCube
+      case null => true // Workaround for Minecraft being fucky
       case _ => throw new DeveloperFuckedUpException(s"No render trait implemented on ${impl.getClass.getName}. Fix plz. If you want the block to be invisible use NoRender.")
     }
   }
