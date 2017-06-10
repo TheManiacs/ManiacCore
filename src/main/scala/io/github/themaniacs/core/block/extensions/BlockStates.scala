@@ -11,6 +11,6 @@ trait BlockStates {
   def getStateForRotation(state: IBlockState, rotation: Rotation): IBlockState = state
   def getStateForMirror(state: IBlockState, mirror: Mirror): IBlockState = state
   def createBlockState(): Option[BlockStateContainer] = None
-  def getExtendedState(state: IBlockState, world: IBlockAccess, pos: BlockPos): Option[IBlockState]
-  def getActualState(state: IBlockState, world: IBlockAccess, pos: BlockPos): Option[IBlockState]
+  def getExtendedState(state: IBlockState, world: IBlockAccess, pos: BlockPos): Option[IBlockState] = None
+  def getActualState(state: IBlockState, world: IBlockAccess, pos: BlockPos): Option[IBlockState] = None
 }
