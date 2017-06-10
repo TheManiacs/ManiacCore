@@ -1,14 +1,14 @@
 package io.github.themaniacs.core.block
 
 import net.minecraft.block.Block
-import net.minecraft.block.state.IBlockState
+import net.minecraft.block.state.{BlockStateContainer, IBlockState}
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.item.ItemStack
 import net.minecraft.util.math.BlockPos
-import net.minecraft.util.{BlockRenderLayer, EnumBlockRenderType}
+import net.minecraft.util.{BlockRenderLayer, EnumBlockRenderType, Mirror, Rotation}
 import net.minecraft.world.{IBlockAccess, World}
-import io.github.themaniacs.core.block.extensions.{AnimatedRender, LiquidRender, ModelRender, NoRender}
-import io.github.themaniacs.core.util.{DeveloperFuckedUpException, SOLID, TRANSPARENT, CUTOUT}
+import io.github.themaniacs.core.block.extensions._
+import io.github.themaniacs.core.util.{CUTOUT, DeveloperFuckedUpException, SOLID, TRANSPARENT}
 
 trait BlockProxy extends Block {
   val impl: BlockBase
@@ -95,6 +95,70 @@ trait BlockProxy extends Block {
       case i: AnimatedRender => i.isFullOpaqueCube
       case null => true // Workaround for Minecraft being fucky
       case _ => throw new DeveloperFuckedUpException(s"No render trait implemented on ${impl.getClass.getName}. Fix plz. If you want the block to be invisible use NoRender.")
+    }
+  }
+
+  override def getStateFromMeta(meta: Int): IBlockState = {
+    impl match {
+      case i: BlockStates => i.getStateForMeta(meta) match {
+        case Some(state) => state
+        case None => super.getStateFromMeta(meta)
+      }
+      case _ => super.getStateFromMeta(meta)
+    }
+  }
+
+  override def getMetaFromState(state: IBlockState): Int = {
+    impl match {
+      case i: BlockStates => i.getMetaForState(state) match {
+        case Some(meta) => meta
+        case None => super.getMetaFromState(state)
+      }
+      case _ => super.getMetaFromState(state)
+    }
+  }
+
+  override def withRotation(state: IBlockState, rot: Rotation): IBlockState = {
+    impl match {
+      case i: BlockStates => i.getStateForRotation(state, rot)
+      case _ => super.withRotation(state, rot)
+    }
+  }
+
+  override def withMirror(state: IBlockState, mirror: Mirror): IBlockState = {
+    impl match {
+      case i: BlockStates => i.getStateForMirror(state, mirror)
+      case _ => super.withMirror(state, mirror)
+    }
+  }
+
+  override def createBlockState(): BlockStateContainer = {
+    impl match {
+      case i: BlockStates => i.createBlockState() match {
+        case Some(state) => state
+        case None => super.createBlockState()
+      }
+      case _ => super.createBlockState()
+    }
+  }
+
+  override def getExtendedState(state: IBlockState, world: IBlockAccess, pos: BlockPos): IBlockState = {
+    impl match {
+      case i: BlockStates => i.getExtendedState(state, world, pos) match {
+        case Some(state) => state
+        case None => super.getExtendedState(state, world, pos)
+      }
+      case _ => super.getExtendedState(state, world, pos)
+    }
+  }
+
+  override def getActualState(state: IBlockState, world: IBlockAccess, pos: BlockPos): IBlockState = {
+    impl match {
+      case i: BlockStates => i.getActualState(state, world, pos) match {
+        case Some(state) => state
+        case None => super.getActualState(state, world, pos)
+      }
+      case _ => super.getActualState(state, world, pos)
     }
   }
 }
