@@ -162,6 +162,6 @@ trait BlockProxy extends Block {
     }
   }
 
-  def getDefaultBlockState: IBlockState = getDefaultState
-  def setDefaultBlockState(state: IBlockState): Unit = setDefaultState(state)
+  def getDefaultBlockState: IBlockState
+  def setDefaultBlockState(state: IBlockState): Unit
 }
