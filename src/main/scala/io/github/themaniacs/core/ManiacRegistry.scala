@@ -21,13 +21,14 @@ object ManiacRegistry {
     block.proxy = Some(blockProxy)
     block match {
       case b: BlockStates => blockProxy.setDefaultBlockState(b.changeDefaultState(blockProxy.getDefaultBlockState))
+      case _ =>
     }
     val mod: String = Loader.instance().activeModContainer().getModId
     blockProxy.setUnlocalizedName(mod + ".block." + block.id)
     blockProxy.setRegistryName(mod, block.id)
     block.creativeTab match {
       case Some(tab) => blockProxy.setCreativeTab(tab)
-      case None => ()
+      case None =>
     }
     GameRegistry.register(blockProxy)
 
