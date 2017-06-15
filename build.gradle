@@ -75,7 +75,7 @@ idea {
 
 //sources jar file task
 task sourcesJar(type: Jar) {
-    from sourceSets.main.java
+    from sourceSets.main.scala
     classifier = 'sources'
 }
 
