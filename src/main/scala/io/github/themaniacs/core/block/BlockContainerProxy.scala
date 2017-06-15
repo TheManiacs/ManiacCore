@@ -11,6 +11,7 @@ class BlockContainerProxy(implementation: BlockBase with TileEntity) extends Blo
 
   override val impl: BlockBase = implementation
 
-  def getDefaultBlockState: IBlockState = getDefaultState
-  def setDefaultBlockState(state: IBlockState): Unit = setDefaultState(state)
+  override def getDefaultBlockState: IBlockState = getDefaultState
+  override def setDefaultBlockState(state: IBlockState): Unit = setDefaultState(state)
+  override def getBaseBlockState: IBlockState = this.blockState.getBaseState
 }
