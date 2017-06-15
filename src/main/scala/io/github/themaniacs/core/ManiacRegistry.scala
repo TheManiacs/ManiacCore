@@ -1,9 +1,8 @@
 package io.github.themaniacs.core
 
-import io.github.themaniacs.core.block.extensions.TileEntity
+import io.github.themaniacs.core.block.extensions.{BlockStates, Ore, TileEntity}
 import net.minecraftforge.fml.common.Loader
 import net.minecraftforge.fml.common.registry.GameRegistry
-import io.github.themaniacs.core.block.extensions.Ore
 import io.github.themaniacs.core.block.{BlockBase, BlockContainerProxy, BlockOreProxy, GenericBlockProxy}
 import io.github.themaniacs.core.item.extensions._
 import io.github.themaniacs.core.item._
@@ -20,6 +19,9 @@ object ManiacRegistry {
       case b => new GenericBlockProxy(b)
     }
     block.proxy = Some(blockProxy)
+    block match {
+      case b: BlockStates => blockProxy.setDefaultBlockState(b.changeDefaultState(blockProxy.getDefaultBlockState))
+    }
     val mod: String = Loader.instance().activeModContainer().getModId
     blockProxy.setUnlocalizedName(mod + ".block." + block.id)
     blockProxy.setRegistryName(mod, block.id)
