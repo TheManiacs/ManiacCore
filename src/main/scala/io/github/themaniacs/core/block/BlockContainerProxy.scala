@@ -6,10 +6,8 @@ import net.minecraft.block.{Block, ITileEntityProvider}
 import net.minecraft.tileentity.{TileEntity => TE}
 import net.minecraft.world.World
 
-class BlockContainerProxy(implementation: BlockBase with TileEntity) extends Block(implementation.material, implementation.mapColor) with BlockProxy with ITileEntityProvider {
-  override def createNewTileEntity(worldIn: World, meta: Int): TE = implementation.makeNewTileEntity(worldIn, getStateFromMeta(meta))
-
-  override val impl: BlockBase = implementation
+class BlockContainerProxy(override val impl: BlockBase with TileEntity) extends Block(impl.material, impl.mapColor) with BlockProxy with ITileEntityProvider {
+  override def createNewTileEntity(worldIn: World, meta: Int): TE = impl.makeNewTileEntity(worldIn, getStateFromMeta(meta))
 
   override def getDefaultBlockState: IBlockState = getDefaultState
   override def setDefaultBlockState(state: IBlockState): Unit = setDefaultState(state)
