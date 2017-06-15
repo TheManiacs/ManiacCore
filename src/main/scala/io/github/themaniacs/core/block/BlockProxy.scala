@@ -161,4 +161,7 @@ trait BlockProxy extends Block {
       case _ => super.getActualState(state, world, pos)
     }
   }
+
+  def getDefaultBlockState: IBlockState = getDefaultState
+  def setDefaultBlockState(state: IBlockState): Unit = setDefaultState(state)
 }
