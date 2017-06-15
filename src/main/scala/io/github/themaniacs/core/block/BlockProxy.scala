@@ -134,7 +134,7 @@ trait BlockProxy extends Block {
 
   override def createBlockState(): BlockStateContainer = {
     impl match {
-      case i: BlockStates => i.createBlockState() match {
+      case i: BlockStates => i.createBlockState(this) match {
         case Some(state) => state
         case None => super.createBlockState()
       }

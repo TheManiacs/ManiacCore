@@ -1,5 +1,6 @@
 package io.github.themaniacs.core.block.extensions
 
+import io.github.themaniacs.core.block.BlockProxy
 import net.minecraft.block.state.{BlockStateContainer, IBlockState}
 import net.minecraft.util.{Mirror, Rotation}
 import net.minecraft.util.math.BlockPos
@@ -11,7 +12,7 @@ trait BlockStates {
   def getMetaForState(state: IBlockState): Option[Int] = None
   def getStateForRotation(state: IBlockState, rotation: Rotation): IBlockState = state
   def getStateForMirror(state: IBlockState, mirror: Mirror): IBlockState = state
-  def createBlockState(): Option[BlockStateContainer] = None
+  def createBlockState(proxy: BlockProxy): Option[BlockStateContainer] = None
   def getExtendedState(state: IBlockState, world: IBlockAccess, pos: BlockPos): Option[IBlockState] = None
   def getActualState(state: IBlockState, world: IBlockAccess, pos: BlockPos): Option[IBlockState] = None
 }
