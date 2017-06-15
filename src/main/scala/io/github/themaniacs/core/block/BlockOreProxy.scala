@@ -5,6 +5,7 @@ import net.minecraft.block.BlockOre
 import net.minecraft.block.state.IBlockState
 
 class BlockOreProxy(override val impl: BlockBase with Ore) extends BlockOre(impl.mapColor) with BlockProxy {
-  def getDefaultBlockState: IBlockState = getDefaultState
-  def setDefaultBlockState(state: IBlockState): Unit = setDefaultState(state)
+  override def getDefaultBlockState: IBlockState = getDefaultState
+  override def setDefaultBlockState(state: IBlockState): Unit = setDefaultState(state)
+  override def getBaseBlockState: IBlockState = this.blockState.getBaseState
 }
