@@ -164,4 +164,5 @@ trait BlockProxy extends Block {
 
   def getDefaultBlockState: IBlockState
   def setDefaultBlockState(state: IBlockState): Unit
+  def getBaseBlockState: IBlockState
 }
