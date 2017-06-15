@@ -6,6 +6,7 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.world.IBlockAccess
 
 trait BlockStates {
+  def changeDefaultState(state: IBlockState): IBlockState = state
   def getStateForMeta(meta: Int): Option[IBlockState] = None
   def getMetaForState(state: IBlockState): Option[Int] = None
   def getStateForRotation(state: IBlockState, rotation: Rotation): IBlockState = state
